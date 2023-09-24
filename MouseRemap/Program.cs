@@ -76,7 +76,9 @@ namespace MouseRemap
                     Console.WriteLine("L button down");
                     if (cbLeft.Checked) 
                     {
-                        doLeftUp();
+                        (new Thread(() => {
+                            doLeftUp();
+                        })).Start();
                     }
                     
                 }
@@ -87,7 +89,10 @@ namespace MouseRemap
                     Console.WriteLine("R button down");
                     if(cbRight.Checked) 
                     {
-                        doRightUp();
+                        (new Thread(() => {
+                            doRightUp();
+                        })).Start();
+                        
                     }
                 }
                 if (MouseMessages.WM_RBUTTONUP == (MouseMessages)wParam)
