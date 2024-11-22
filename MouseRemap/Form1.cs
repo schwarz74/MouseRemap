@@ -1,4 +1,5 @@
-using System.Runtime.InteropServices;
+
+
 
 namespace MouseRemap
 {
@@ -7,10 +8,15 @@ namespace MouseRemap
         bool wasRightClick = false;
         bool wasLeftClick = false;
 
+
+        System.Media.SoundPlayer playerOff;
+        System.Media.SoundPlayer playerOn;
+
         public Form1()
         {
+            playerOff = new System.Media.SoundPlayer(new System.IO.MemoryStream(Resource1.bong_0));
+            playerOn = new System.Media.SoundPlayer(new System.IO.MemoryStream(Resource1.bing_0));
             InitializeComponent();
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -30,6 +36,18 @@ namespace MouseRemap
 
         private void onClick(object sender, EventArgs e)
         {
+            if (mousePressToClickLeft.Checked || mousePressToClickRight.Checked)
+            {
+                // play off sound    
+                playerOff.Play();
+            }
+            else 
+            { 
+                // play on sound
+                playerOn.Play();
+            }
+
+            // turn off
             if (mousePressToClickLeft.Checked)
             {
                 //save prev state
@@ -40,6 +58,7 @@ namespace MouseRemap
             }
             else 
             {
+                // turn on
                 if (wasLeftClick)
                 {
                     mousePressToClickLeft.Checked = true;
@@ -48,6 +67,7 @@ namespace MouseRemap
                     wasLeftClick = false;
                 }
             }
+            // turn off
             if (mousePressToClickRight.Checked)
             {
                 //save prev state
@@ -58,6 +78,7 @@ namespace MouseRemap
             }
             else
             {
+                // turn on
                 if (wasRightClick)
                 {
                     mousePressToClickRight.Checked = true;
